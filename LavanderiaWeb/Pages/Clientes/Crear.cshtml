@@ -1,0 +1,158 @@
+﻿@page
+@model LavanderiaWeb.Pages.Clientes.CrearModel
+@{
+    ViewData["Title"] = "Nuevo Cliente";
+}
+
+<!-- Breadcrumb -->
+<div class="text-sm breadcrumbs text-slate-400 mb-6">
+    <ul>
+        <li><a asp-page="/Index" class="hover:text-indigo-600">Dashboard</a></li>
+        <li><a asp-page="/Clientes/Index" class="hover:text-indigo-600">Clientes</a></li>
+        <li class="text-slate-600 font-medium">Nuevo Cliente</li>
+    </ul>
+</div>
+
+<!-- Encabezado -->
+<div class="mb-8">
+    <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Registrar Cliente</h1>
+    <p class="text-sm text-slate-500 mt-0.5">Completa los datos para agregar un nuevo cliente al sistema.</p>
+</div>
+
+<!-- Layout de dos columnas: formulario + info -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- ── Formulario principal (2/3) ── -->
+    <div class="lg:col-span-2">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+
+            <div class="px-6 py-4 border-b border-slate-100">
+                <h2 class="text-sm font-semibold text-slate-700">Información del Cliente</h2>
+            </div>
+
+            <form method="post" class="px-6 py-6 space-y-5">
+
+                @Html.AntiForgeryToken()
+
+                <!-- Nombre -->
+                <div class="form-control">
+                    <label class="label pb-1">
+                        <span class="label-text font-medium text-slate-700 text-sm">
+                            Nombre completo
+                            <span class="text-red-400 ml-0.5">*</span>
+                        </span>
+                    </label>
+                    <input asp-for="NuevoCliente.nombre"
+                           type="text"
+                           placeholder="Ej: Juan Pérez"
+                           class="input input-bordered w-full bg-slate-50 focus:bg-white focus:border-indigo-400 focus:outline-none transition text-sm"
+                           required />
+                    <span asp-validation-for="NuevoCliente.nombre" class="text-red-500 text-xs mt-1"></span>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="form-control">
+                    <label class="label pb-1">
+                        <span class="label-text font-medium text-slate-700 text-sm">
+                            Teléfono
+                            <span class="text-red-400 ml-0.5">*</span>
+                        </span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </span>
+                        <input asp-for="NuevoCliente.telefono"
+                               type="tel"
+                               placeholder="Ej: 912345678"
+                               class="input input-bordered w-full pl-10 bg-slate-50 focus:bg-white focus:border-indigo-400 focus:outline-none transition text-sm"
+                               required />
+                    </div>
+                    <span asp-validation-for="NuevoCliente.telefono" class="text-red-500 text-xs mt-1"></span>
+                </div>
+
+                <!-- Suscripción -->
+                <div class="form-control">
+                    <label class="label pb-1">
+                        <span class="label-text font-medium text-slate-700 text-sm">Suscripción</span>
+                        <span class="label-text-alt text-slate-400 text-xs">Opcional</span>
+                    </label>
+                    <select asp-for="SubscripcionSeleccionada"
+                            asp-items="Model.OpcionesSubscripcion"
+                            class="select select-bordered w-full bg-slate-50 focus:bg-white focus:border-indigo-400 focus:outline-none transition text-sm">
+                    </select>
+                    <label class="label pt-1">
+                        <span class="label-text-alt text-slate-400">Puedes asignar o cambiar la suscripción después.</span>
+                    </label>
+                </div>
+
+                <!-- Botones -->
+                <div class="flex items-center justify-end gap-3 pt-2 border-t border-slate-100 mt-6">
+                    <a asp-page="/Clientes/Index"
+                           class="btn btn-ghost btn-sm text-slate-600">
+                        Cancelar
+                    </a>
+                    <button type="submit"
+                            class="btn btn-sm bg-indigo-600 hover:bg-indigo-700 text-white border-0 shadow-sm gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Guardar Cliente
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- ── Panel lateral informativo (1/3) ── -->
+    <div class="space-y-4">
+
+        <!-- Tips -->
+        <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5">
+            <div class="flex items-center gap-2 mb-3">
+                <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 class="text-sm font-semibold text-indigo-700">Consejos</h3>
+            </div>
+            <ul class="space-y-2 text-xs text-indigo-600">
+                <li class="flex items-start gap-1.5">
+                    <span class="mt-0.5 w-1 h-1 rounded-full bg-indigo-400 flex-shrink-0"></span>
+                    Ingresa el teléfono sin espacios ni guiones.
+                </li>
+                <li class="flex items-start gap-1.5">
+                    <span class="mt-0.5 w-1 h-1 rounded-full bg-indigo-400 flex-shrink-0"></span>
+                    La suscripción puede asignarse después desde el listado.
+                </li>
+                <li class="flex items-start gap-1.5">
+                    <span class="mt-0.5 w-1 h-1 rounded-full bg-indigo-400 flex-shrink-0"></span>
+                    El nombre debe ser el nombre completo del titular.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Resumen de planes -->
+        <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm">
+            <h3 class="text-sm font-semibold text-slate-700 mb-3">Planes disponibles</h3>
+            <div class="space-y-2">
+                @foreach (var item in Model.OpcionesSubscripcion.Skip(1))
+                {
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-600">@item.Text.Split('—')[0].Trim()</span>
+                        <span class="font-mono text-slate-400">@item.Text.Split('—').LastOrDefault()?.Trim()</span>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
